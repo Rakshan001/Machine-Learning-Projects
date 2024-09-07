@@ -16,6 +16,7 @@ imgTest=cv2.cvtColor(imgTest,cv2.COLOR_BGR2RGB)
 faceLoc=face_recognition.face_locations(imgElon)[0]
 # encoding the face detected
 encodeElon=face_recognition.face_encodings(imgElon)
+cv2.rectangle(imgElon,(faceLoc[3],faceLoc[0]),(faceLoc[1],faceLoc[2]),(255,0,255))
 
 
 # print(faceLoc)
