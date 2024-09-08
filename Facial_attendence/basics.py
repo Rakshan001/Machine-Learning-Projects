@@ -2,26 +2,47 @@ import cv2
 import numpy as np
 import face_recognition
 
-imgElon = face_recognition.load_image_file("photos/Elon.jpg")
+imgElon = face_recognition.load_image_file("photos/Elon.png")
 # convert img into RGB
 imgElon=cv2.cvtColor(imgElon,cv2.COLOR_BGR2RGB)
 
 imgTest = face_recognition.load_image_file("photos/ElonTest.jpg")
+# imgTest = face_recognition.load_image_file("photos/ratan-tata.png")
+
 imgTest=cv2.cvtColor(imgTest,cv2.COLOR_BGR2RGB)
-
-
-
 
 # Detecting the face
 faceLoc=face_recognition.face_locations(imgElon)[0]
 # encoding the face detected
-encodeElon=face_recognition.face_encodings(imgElon)
-cv2.rectangle(imgElon,(faceLoc[3],faceLoc[0]),(faceLoc[1],faceLoc[2]),(255,0,255))
+encodeElon=face_recognition.face_encodings(imgElon)[0]
+cv2.rectangle(imgElon,(faceLoc[3],faceLoc[0]),(faceLoc[1],faceLoc[2]),(255,0,255),2)
 
 
-# print(faceLoc)
+# Testing
+faceLocTest=face_recognition.face_locations(imgTest)[0]
+encodeTest=face_recognition.face_encodings(imgTest)[0]
+cv2.rectangle(imgTest,(faceLocTest[3],faceLocTest[0]),(faceLocTest[1],faceLocTest[2]),(255,0,255),2)
 
 
+
+# Comparing and finding the distance betweeen them
+# we are using Lineaer SVM  to find out wether they match or not
+
+result = face_recognition.compare_faces([encodeElon],encodeTest)
+
+
+
+# we need to find how similar images are so we use distances 
+# we use Euclidean distance to find out how similar images are
+faceDis = face_recognition.face_distance([encodeElon],encodeTest)
+print(faceDis)
+print(result)
+
+
+
+print(faceLoc)
+
+cv2.putText(imgTest,f"{result}{round(faceDis[0],2)}",(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,0,255),2)
 cv2.imshow('Elon Musk',imgElon)
 cv2.imshow('Elon Test',imgTest)
 
