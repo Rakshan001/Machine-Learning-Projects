@@ -15,4 +15,7 @@ cv2.imwrite(os.path.join('.','img','orangecat_out.jpeg'),img)
 
 # visulaize image
 cv2.imshow('imga',img)
-cv2.waitKey(0)
+# cv2.waitKey(0)
+
+''' Video processing'''
+
